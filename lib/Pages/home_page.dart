@@ -16,6 +16,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: Drawer(),
-    );
+    ); //color as autogeneted by the material lib and scaffold which is the feature of it
   }
 }

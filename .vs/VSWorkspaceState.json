@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\android",
+    "\\android\\app",
+    "\\android\\app\\src",
+    "\\flutter",
+    "\\flutter\\examples",
+    "\\flutter\\packages",
+    "\\lib",
+    "\\lib\\Pages"
+  ],
+  "SelectedNode": "\\lib\\Pages\\home_page.dart",
+  "PreviewInSolutionExplorer": false
+}

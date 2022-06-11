@@ -1,15 +1,16 @@
+import 'package:demoapp/Pages/utils/routes.dart';
 import 'package:flutter/material.dart'; //it's a material libarary and we can import cupationan lib to
 
 import 'Pages/home_page.dart';
 import 'Pages/login_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp()); //it's a method in which we keep the app
 }
 
 class MyApp extends StatelessWidget {
-  //stl it's a stateless widget in which myapp is extending teh property of statelessWidget
-  //  const MyApp({Key? key}) : super(key: key); //constructor
+  const MyApp({Key? key}) : super(key: key); //constructor
   @override //it's a process of overriding the method with your own task
   Widget build(
       BuildContext
@@ -17,16 +18,19 @@ class MyApp extends StatelessWidget {
   {
     return MaterialApp(
       themeMode: ThemeMode.light,
-      theme: ThemeData(primarySwatch: Colors.yellow),
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        fontFamily: GoogleFonts.lato().fontFamily,
+      ),
+      debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      initialRoute: "/home", //by default it will take u to homepage
+      initialRoute: "/",
       routes: {
-        //here routes means the road or path "/" is a default route
-        "/": (context) => LoginPage(),
-        "/home": (context) => HomePage(),
-        "/login": (context) => LoginPage()
+        "/": (context) => const LoginPage(),
+        MyRoutes.homeRoute: (context) =>HomePage(), //it will take u to the homepage directly
+        MyRoutes.loginRoute: (context) => const LoginPage()
       },
     );
   }

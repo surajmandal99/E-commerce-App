@@ -10,143 +10,145 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
-  late final AnimationController _controller;
+  // late final AnimationController _controller;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _controller = AnimationController(vsync: this);
-  }
+  //   _controller = AnimationController(vsync: this);
+  // }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
-  String name = " ";
+  String name = "";
   bool changeButton = false;
+  final _formKey = GlobalKey<FormState>();
+
+  moveToHome(BuildContext context) async {
+    //whenever the login is pressed we will move to home
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        changeButton = true; //if we press on login button
+      });
+      await Future.delayed(Duration(seconds: 1));
+      await Navigator.pushNamed(context, MyRoutes.homeRoute);
+      setState(() {
+        changeButton =
+            false; //if poped means coming back then the button will be same
+      });
+    }
+  }
+
   //underscore means to keep the var private in dart eg string  _name="suraj";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Material(
         // color: Colors.white,
-        body: SingleChildScrollView(
+        child: SingleChildScrollView(
       //for removing the overflow error in small devices it will provide scroll view
-      child: Column(
-        children: [
-          Lottie.network(
-            "https://assets6.lottiefiles.com/packages/lf20_e6qptb87.json",
-            fit: BoxFit.cover,
-            width: 300,
-            height: 300,
-
-            //controller
-            controller: _controller,
-            onLoaded: (composition) {
-              // Configure the AnimationController with the duration of the
-              // Lottie file and start the animation.
-              _controller
-                ..duration = composition.duration
-                ..forward();
-            },
-          ),
-          SizedBox(
-            height: 20, //gap b/w username and pss
-          ),
-          Text(
-            "Welcome $name",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Lottie.network(
+              "https://assets6.lottiefiles.com/packages/lf20_e6qptb87.json",
+              fit: BoxFit.cover,
+              width: 300,
+              height: 300,
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    //for decorating the input text
-                    hintText: "Enter Username",
-                    labelText: "Username",
-                  ),
-                  onChanged: (value) {
-                    //it show to name whenever the user gives the input on the username and it will be shown to the welcome box
-                    name = value;
-                    setState(() {
-                      //it will again call the build method and change the ui
-                    });
-                  },
-                ),
-                TextFormField(
-                  obscureText: true, //for hiding the pss
-                  decoration: InputDecoration(
-                    hintText: "Enter Password",
-                    labelText: "Password",
-                  ),
-                ),
-                SizedBox(
-                  // for giving the space b/w img and container or text
-                  height: 35,
-                ),
-                InkWell(
-                  //it is used to give splash effect when the container is pressed (login)
-                  onTap: () async {
-                    setState(() {
-                      changeButton = true; //if we press on login button
-                    });
-                    await Future.delayed(Duration(seconds: 1));
-                    Navigator.pushNamed(context, MyRoutes.homeRoute);
-                  },
-                  child: AnimatedContainer(
-                    //animated container will apply animation on the loginbox for some duration
-                    duration: Duration(seconds: 1),
-                    width: changeButton ? 50 : 150,
-                    height:
-                        50, //it will animate if the changeButton is true and resize the login containerheight: 50
-                    alignment: Alignment.center,
-                    child: changeButton
-                        ? Icon(
-                            Icons.done,
-                            color: Colors.yellow,
-                          )
-                        : Text(
-                            "Login",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                    decoration: BoxDecoration(
-                      color: Colors.deepOrange,
-                      borderRadius:
-                          BorderRadius.circular(changeButton ? 50 : 8),
+            SizedBox(
+              height: 20, //gap b/w username and pss
+            ),
+            Text(
+              "Welcome $name",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      //for decorating the input text
+                      hintText: "Enter Username",
+                      labelText: "Username",
                     ),
-                    //border radius is used to give the circular shape of the container
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Username Can't be empty";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      //it show to name whenever the user gives the input on the username and it will be shown to the welcome box
+                      name = value;
+                      setState(() {
+                        //it will again call the build method and change the ui
+                      });
+                    },
                   ),
-                )
-
-                // ElevatedButton(
-                //   onPressed: () {
-                //     //performs the action on press a/c the user defn conditon
-                //     Navigator.pushNamed(
-                //         context, MyRoutes.homeRoute); //follows the stack ds
-                //   },
-                //   child: Text("Login"),
-                //   style: TextButton.styleFrom(
-                //       minimumSize: Size(120,
-                //           40) //for setting the hight and width of the button
-                //       ),
-                // )
-              ],
-            ),
-          )
-        ],
+                  TextFormField(
+                      obscureText: true, //for hiding the pss
+                      decoration: InputDecoration(
+                        hintText: "Enter Password",
+                        labelText: "Password",
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Password Can't be empty";
+                        } else if (value.length < 7) {
+                          return "Password length should be atleast 7";
+                        }
+                        return null;
+                      }),
+                  SizedBox(
+                    // for giving the space b/w img and container or text
+                    height: 35,
+                  ),
+                  Material(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
+                    child: InkWell(
+                      //it is used to give splash effect when the container is pressed (login)
+                      onTap: () => moveToHome(context),
+                      child: AnimatedContainer(
+                        //animated container will apply animation on the loginbox for some duration
+                        duration: Duration(seconds: 1),
+                        width: changeButton ? 50 : 150,
+                        height:
+                            50, //it will animate if the changeButton if true and resize the login containerheight: 50
+                        alignment: Alignment.center,
+                        child: changeButton
+                            ? Icon(
+                                Icons.done,
+                                color: Colors.yellow,
+                              )
+                            : Text(
+                                "Login",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     ));
   }

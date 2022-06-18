@@ -8,12 +8,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       //it's a widget just like in html consists of head,body
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           "Catalog App",
-          style: TextStyle(color: Colors.black),
         ),
       ), //head
       body: Center(

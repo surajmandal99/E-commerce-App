@@ -1,5 +1,5 @@
 # Catalogapp
-It's my first flutter application in which i have learned alots about the widgets and it's multiple properties according to the diffrent widgets.
+# It's my first flutter application in which i have learned alots about the widgets and it's multiple properties according to the diffrent widgets.
 
 # Dark_and_Light_Mode 🤞💻🪄
 
